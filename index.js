@@ -5,7 +5,6 @@ counters.forEach(counter => {
   const updateCount = () => {
     const target = +counter.getAttribute("data-target");
     const count = +counter.innerText;
-
     const increment = target / 100;
 
     if (count < target) {
@@ -15,38 +14,41 @@ counters.forEach(counter => {
       counter.innerText = target + "+";
     }
   };
-
   updateCount();
 });
+document.addEventListener("DOMContentLoaded", function() {
 
+  const form = document.getElementById("partner-form");
 
-// RUN AFTER PAGE LOAD
-document.addEventListener("DOMContentLoaded", () => {
-
-  // ✅ MOBILE MENU FIX
-  const toggle = document.getElementById("menu-toggle");
-  const navLinks = document.querySelector(".nav-links");
-
-  if (toggle && navLinks) {
-    toggle.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-    });
+  if (!form) {
+    console.log("Form not found ❌");
+    return;
   }
 
-  // ✅ SCROLL REVEAL
-  function revealOnScroll() {
-    const reveals = document.querySelectorAll(".reveal");
+  console.log("Form found ✅");
 
-    reveals.forEach(element => {
-      const windowHeight = window.innerHeight;
-      const elementTop = element.getBoundingClientRect().top;
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      if (elementTop < windowHeight - 100) {
-        element.classList.add("active");
-      }
-    });
-  }
+    const name = document.querySelector('input[name="name"]').value;
+    const email = document.querySelector('input[name="email"]').value;
+    const organization = document.querySelector('input[name="organization"]').value;
+    const phone = document.querySelector('input[name="phone"]').value;
+    const partnership = document.querySelector('select[name="partnership"]').value;
+    const message = document.querySelector('textarea[name="message"]').value;
 
-  window.addEventListener("scroll", revealOnScroll);
+    const text = `Hello, I want to partner with you.
+
+Name: ${name}
+Email: ${email}
+Organization: ${organization}
+Phone: ${phone}
+Partnership Type: ${partnership}
+Message: ${message}`;
+
+    const url = `https://wa.me/254792336957?text=${encodeURIComponent(text)}`;
+
+    window.open(url, "_blank");
+  });
 
 });
